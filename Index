@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muusikateooria ja ajaloo lõiming</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f5f3ee;
+      color: #2c2c2a;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2c2c2a;
+      margin-bottom: 0.4rem;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: #5f5e5a;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e0ddd6;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #888780;
+      margin-bottom: 0.5rem;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid #d3d1c7;
+      border-radius: 8px;
+      background: #faf9f7;
+      color: #2c2c2a;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #8b6f4e;
+      box-shadow: 0 0 0 3px rgba(139,111,78,0.12);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #3c3489;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    button:hover { background: #2e2870; }
+    button:disabled { background: #b4b2a9; cursor: not-allowed; }
+
+    .result {
+      display: none;
+    }
+
+    .result.visible { display: block; }
+
+    .badge {
+      display: inline-block;
+      background: #eeedfe;
+      color: #3c3489;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+    }
+
+    .section {
+      margin-bottom: 1.25rem;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #888780;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-body {
+      font-size: 0.93rem;
+      line-height: 1.7;
+      color: #2c2c2a;
+    }
+
+    .loading-text {
+      color: #888780;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .klass-badge {
+      display: inline-block;
+      background: #e1f5ee;
+      color: #0f6e56;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+      border-radius: 99px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #b4b2a9;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Muusikateooria × Muusikaajalugu</h1>
+      <p>Vali teooriateema — assistent leiab ajaloolised seosed VHK ainekava põhjal</p>
+    </header>
+
+    <div class="card">
+      <label for="topic">Teooriateema</label>
+      <select id="topic">
+        <option value="">— Vali teema —</option>
+        <optgroup label="Laadid ja helistikud">
+          <option value="Duur ja moll (mažoor ja minoor)">Duur ja moll</option>
+          <option value="Kirikulaadid (moodus, modaalsus)">Kirikulaadid (moodus)</option>
+          <option value="Pentatoonika">Pentatoonika</option>
+          <option value="Meloodiline moll">Meloodiline moll</option>
+          <option value="Harmooniline moll">Harmooniline moll</option>
+          <option value="Kvindiring ja helistike süsteem">Kvindiring ja helistike süsteem</option>
+        </optgroup>
+        <optgroup label="Akordid ja harmoonia">
+          <option value="Põhikolmkõlad (toonika, subdominant, dominant)">Põhikolmkõlad (T, S, D)</option>
+          <option value="Dominantseptakord (V7)">Dominantseptakord (V7)</option>
+          <option value="Suur mažoorne septakord (Maj7)">Suur mažoorne septakord (Maj7)</option>
+          <option value="Väike minoorne septakord (m7)">Väike minoorne septakord (m7)</option>
+          <option value="Vähendatud septakord">Vähendatud septakord</option>
+          <option value="Poolvähendatud septakord">Poolvähendatud septakord</option>
+          <option value="Akordide pöörded">Akordide pöörded</option>
+          <option value="Funktsioonharmoonia (T-S-D-T)">Funktsioonharmoonia</option>
+          <option value="Kaldumine ja modulatsioon">Kaldumine ja modulatsioon</option>
+        </optgroup>
+        <optgroup label="Rütm ja meetrum">
+          <option value="Triool">Triool</option>
+          <option value="Sünkoop">Sünkoop</option>
+          <option value="6/8 taktimõõt">6/8 taktimõõt</option>
+          <option value="Polürütmia">Polürütmia</option>
+        </optgroup>
+        <optgroup label="Polüfoonia ja kontrapunkt">
+          <option value="Kaanon">Kaanon</option>
+          <option value="Fuuga ja fuuga elemendid">Fuuga</option>
+          <option value="Imitatsioon ja kontrapunkt">Imitatsioon ja kontrapunkt</option>
+          <option value="Organum ja varane mitmehäälsus">Organum ja varane mitmehäälsus</option>
+          <option value="Cantus firmus">Cantus firmus</option>
+        </optgroup>
+        <optgroup label="Muusikavormid">
+          <option value="Sonaadivorm">Sonaadivorm</option>
+          <option value="Rondo">Rondo</option>
+          <option value="Variatsioonivorm">Variatsioonid</option>
+          <option value="Süit">Süit</option>
+          <option value="Tsükliline vorm (sonaat, sümfoonia, kontsert)">Tsükliline vorm</option>
+          <option value="Da capo aaria ja retsitatiiv">Aaria ja retsitatiiv</option>
+        </optgroup>
+        <optgroup label="Muusika väljendusvahendid">
+          <option value="Faktuur (monofoonia, homofoonia, polüfoonia)">Faktuur</option>
+          <option value="Dünaamika ja selle areng ajaloos">Dünaamika</option>
+          <option value="Tämber ja orkestratsioon">Tämber ja orkestratsioon</option>
+          <option value="Programmiline muusika">Programmiline muusika</option>
+        </optgroup>
+      </select>
+
+      <button id="btn" onclick="getLoimng()">Otsi ajaloolisi seoseid</button>
+    </div>
+
+    <div class="card result" id="result">
+      <div id="result-content"></div>
+    </div>
+
+    <footer>VHK muusikakooli ainekavade põhjal · Claude API</footer>
+  </div>
+
+  <script>
+    async function getLoimng() {
+      const sel = document.getElementById('topic');
+      const topic = sel.value;
+      if (!topic) { alert('Palun vali teooriateema!'); return; }
+
+      const btn = document.getElementById('btn');
+      const resultDiv = document.getElementById('result');
+      const content = document.getElementById('result-content');
+
+      btn.disabled = true;
+      btn.textContent = 'Otsin...';
+      resultDiv.classList.add('visible');
+      content.innerHTML = '<p class="loading-text">Otsin seoseid ainekavast...</p>';
+
+      try {
+        const resp = await fetch('/.netlify/functions/claude', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ topic })
+        });
+
+        const data = await resp.json();
+        const text = data.text;
+
+        const sections = parseResponse(text);
+        content.innerHTML = renderResult(sel.options[sel.selectedIndex].text, sections);
+
+      } catch (e) {
+        content.innerHTML = '<p class="loading-text">Viga päringus. Proovi uuesti.</p>';
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Otsi ajaloolisi seoseid';
+    }
+
+    function parseResponse(text) {
+      const keys = ['KLASS', 'AJALOOLISED PERIOODID', 'HELILOOJAD JA TEOSED', 'TUNNIIDEE', 'SEOS AINEKAVAGA'];
+      const result = {};
+      keys.forEach(k => result[k] = '');
+
+      let current = null;
+      text.split('\n').forEach(line => {
+        const trimmed = line.trim();
+        let matched = false;
+        for (const key of keys) {
+          if (trimmed.startsWith(key + ':')) {
+            current = key;
+            result[key] = trimmed.replace(key + ':', '').trim();
+            matched = true;
+            break;
+          }
+        }
+        if (!matched && current && trimmed) {
+          result[current] += ' ' + trimmed;
+        }
+      });
+      return result;
+    }
+
+    function renderResult(label, s) {
+      return `
+        <span class="badge">${label}</span>
+        ${s['KLASS'] ? `<div class="section"><div class="section-title">Sobib klassile</div><div class="section-body"><span class="klass-badge">${s['KLASS']}</span></div></div>` : ''}
+        <div class="section"><div class="section-title">Ajaloolised perioodid</div><div class="section-body">${s['AJALOOLISED PERIOODID'] || '—'}</div></div>
+        <div class="section"><div class="section-title">Heliloojad ja teosed ainekavast</div><div class="section-body">${s['HELILOOJAD JA TEOSED'] || '—'}</div></div>
+        <div class="section"><div class="section-title">Tunniidee</div><div class="section-body">${s['TUNNIIDEE'] || '—'}</div></div>
+        <div class="section"><div class="section-title">Seos ainekavaga</div><div class="section-body">${s['SEOS AINEKAVAGA'] || '—'}</div></div>
+      `;
+    }
+  </script>
+</body>
+</html>
